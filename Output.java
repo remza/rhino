@@ -29,10 +29,10 @@ public class Output {
 	private double input = 0;
 	private double E = 0;
 		
-	private static final int DESIRED_SPEED = 100; //100
+	private static final int DESIRED_SPEED = 100; 
 	private static final int DESIRED_TURN_SPEED = 200; //900
-	private static final int BASE_SPEED = 50; //90
-	private static final int BLOCK_SIZE = 180; //175
+	private static final int BASE_SPEED = 333; //90//100 - must be lower than 900 for control theory to work
+	private static final int BLOCK_SIZE = 243; //175
     
 	// {{{ Output constructor
   /**

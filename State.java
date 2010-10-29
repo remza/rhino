@@ -138,8 +138,8 @@ public class State {
 			readMotors();
 			readTacho();
 			readEOPDs();
-			if(clock % 5 == 0) { // every 20ms
-				//System.out.println(left_dist + ":" + centre_dist + ":" + right_dist);
+			if(clock % 2 == 0) { // every 20ms
+				System.out.println(left_dist + ":" + centre_dist + ":" + right_dist);
 			}
 		}
 	}

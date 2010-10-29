@@ -27,7 +27,7 @@ public class Behaviour implements Runnable {
 	public Behaviour(State my_state, Output my_output) {
 		state = my_state;
 		output = my_output;
-		world = new GridWorld(10, 10, 0, 0, 1, 4);
+		world = new GridWorld(10, 10, 0, 0, 4, 3);
 	}
 	// }}}
 	

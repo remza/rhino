@@ -46,7 +46,7 @@ public final class Rhino {
 	public static void main(String[] args) {
 			
 		Rhino rhino = new Rhino(
-			new TachoPilot(56.0f, 95.25f, new Motor(MotorPort.A), new Motor(MotorPort.C), false), 
+			new TachoPilot(43.2f, 97.25f, new Motor(MotorPort.A), new Motor(MotorPort.C), false), // 56.0f, 95.25f :: 81.6f, 90.25f
 			new EOPD(SensorPort.S1, true), 
 			new EOPD(SensorPort.S2, true),
 			new EOPD(SensorPort.S3, true)

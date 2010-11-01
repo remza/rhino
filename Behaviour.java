@@ -1,17 +1,19 @@
 import lejos.nxt.Sound;
+
 /**
  * << Behaviour is part of the maze solving robotics system Rhino >>
+ * Left hand rule. Simple.
  *
  * @author David Hollands
- * @version $0.1a$ 
+ * @version $0.85$ 
  */
 public class Behaviour implements Runnable {
 	private State state;
 	private Output output;
-	private boolean control = true;
-	private int LEFT_BOUND = 900;
-	private int RIGHT_BOUND = 900;
-	private int CENTRE_BOUND = 900;//40; //35
+	private boolean control = true, debug = true;
+	private final int LEFT_BOUND = 900;
+	private final int RIGHT_BOUND = 900;
+	private final int CENTRE_BOUND = 900;//40; //35
 	private GridWorld world;
 	private static final short [] note = {
 	    2349,115, 0,5, 1760,165, 0,35, 1760,28, 0,13, 1976,23, 
@@ -22,21 +24,22 @@ public class Behaviour implements Runnable {
 	
 	// {{{ Behaviour constructor
 	/**
-	 * 
+	 * Oh behave... 
 	 */
-	public Behaviour(State my_state, Output my_output) {
+	public Behaviour(State my_state, Output my_output, boolean debug) {
 		state = my_state;
 		output = my_output;
 		world = new GridWorld(10, 10, 0, 0, 4, 3);
+		this.debug = true;
 	}
 	// }}}
 	
 	public void run() {
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(100); // a subtle pause
 			while(!world.isAtTarget()) {				
-				if (state.getLeftReading() > LEFT_BOUND) {
-					for(int i=0;i<10;i++) System.out.println("TURNING LEFT");
+				if(state.getLeftReading() > LEFT_BOUND) {
+					if(debug)for(int i=0;i<10;i++) System.out.println("TURNING LEFT");
 					state.turn();
 					output.turnLeft();
 					world.updateDirection(3);
@@ -44,14 +47,14 @@ public class Behaviour implements Runnable {
 					output.moveForwardOneBlock(control);
 					world.updateCurrentBlock();
 				} else {
-					if (state.getCentreReading() > CENTRE_BOUND) {
-						for(int i=0;i<10;i++) System.out.println("FOREWORD!");
+					if(state.getCentreReading() > CENTRE_BOUND) {
+						if(debug)for(int i=0;i<10;i++) System.out.println("FOREWORD!");
 						state.charge();
 						output.moveForwardOneBlock(control);
 						world.updateCurrentBlock();
 					} else {
-						if (state.getRightReading() > RIGHT_BOUND) {
-							for(int i=0;i<10;i++) System.out.println("TURNING RIGHT");
+						if(state.getRightReading() > RIGHT_BOUND) {
+							if(debug)for(int i=0;i<10;i++) System.out.println("TURNING RIGHT");
 							state.turn();
 							output.turnRight();
 							world.updateDirection(1);
@@ -59,7 +62,7 @@ public class Behaviour implements Runnable {
 							output.moveForwardOneBlock(control);
 							world.updateCurrentBlock();
 						} else {
-							for(int i=0;i<10;i++) System.out.println("ABOUT TURN!");
+							if(debug)for(int i=0;i<10;i++) System.out.println("ABOUT TURN!");
 							state.turn();
 							output.aboutTurn();
 							world.updateDirection(2);
@@ -70,6 +73,7 @@ public class Behaviour implements Runnable {
 					}
 				}
 			}
+
 			// sound a tune...
 			for(int i=0;i<note.length; i+=2) {
         			final short w = note[i+1];
